@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Задание 1</title>
+        <style>
+            #modal {
+                display: none;
+                z-index: 1;
+                background-color: rgba(0, 0, 0, 0.8);
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+            }
+            #modal-content {
+                background-color: white;
+                margin: 15% auto;
+                padding: 15px;
+                border: 1px solid #888;
+                width: 40%;
+            }
+            #close {
+                color: red;
+                font-size: 30px;
+                float: right;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main_1">
+            <form>
+                <textarea name="task" cols="36" rows="4">Скрипт находит среднее арифметическое введенных значений и выводит результат в поле формы при нажатии на кнопку «Вычислить»</textarea>
+                <p>Введите число a: <input type="text" id="a"></p>
+                <p>Введите число b: <input type="text" id="b"></p>
+                <p>Введите число c: <input type="text" id="c"></p>
+                <p>Результата выполнения программы: <input type="text" readonly id="result"></p>
+                <input type="button" id="btn" value="Вычислить"> 
+            </form>
+            <div id="modal">
+                <div id="modal-content">
+                    <button id="close">&times</button>
+                    <p>Вы либо не ввели значения, либо введенные значения не являются числами!</p>
+                </div>
+            </div>
+            <script>
+                "use strict";
+                const inputA = document.getElementById('a'); 
+                const inputB = document.getElementById('b'); 
+                const inputC = document.getElementById('c'); 
+                const inputResult = document.getElementById('result'); 
+                const button = document.getElementById('btn'); 
+                const modal = document.getElementById('modal'); 
+                const close = document.getElementById('close'); 
+                
+                button.onclick = () => { 
+                    if (!inputA.value || !inputB.value || !inputC.value) {
+                        modal.style.display = "block";
+                    } else {
+                        let A = Number(inputA.value); 
+                        let B = Number(inputB.value); 
+                        let C = Number(inputC.value); 
+                        
+                        if (!isNaN(A) && !isNaN(B) && !isNaN(C)) { 
+                            inputResult.value = ((A + B + C) / 3).toFixed(3); 
+                        } else modal.style.display = "block";
+                    }
+                }
+                
+                close.onclick = () => {
+                    modal.style.display = "none";
+                }
+
+            </script>
+        </div>
+    </body>
+</html>
