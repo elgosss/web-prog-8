@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Задание 3</title>
+        <style>
+            #main {
+                float: left;
+                border: 5px solid black;
+                padding: 10px;
+            }
+            table {
+                border: 3px solid grey;
+                margin-bottom: 20px;
+                margin-top: 20px;
+            }
+            td {
+                padding: 5px;
+            }
+            .line {
+                padding-left: 10px;
+            }
+            input[type="text"] {
+                width: 80px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <form>
+                <p style="margin-top: 0px;"><b>Горизонтальные линии</b></p>
+                <p>Выберите значения параметров, которые требуется изменить, и нажмите кнопку <b>Выполнить.</b></p>
+                <div id="horiz_line" style="background-color: red; width: 270px; height: 25px; margin-left: 0px;"></div>
+                <table>
+                    <tr>
+                        <td>
+                            Выравнивание <br>
+                            <input type="radio" id="align_1" name="align" value="left" checked> <label>LEFT</label><br>
+                            <input type="radio" id="align_2" name="align" value="center"> <label>CENTER</label><br>
+                            <input type="radio" id="align_3" name="align" value="right"> <label>RIGHT</label>
+                        </td>
+                        <td>
+                            Цвет линии (color) <br>
+                            <select id="color">
+                                <option>Red</option>
+                                <option>Orange</option>
+                                <option>Yellow</option>
+                                <option>Purple</option>
+                                <option>Black</option>
+                                <option>Gray</option>
+                                <option>Blue</option>
+                                <option>Green</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="size" value="25"><label class="line">толщина линии (size)</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="width" value="270"><label class="line">длина линии (width)</label></td>
+                    </tr>
+                </table>
+                <input type="button" id="run" value="Выполнить">
+                <input type="reset" id="update" value="Обновить">
+            </form>
+        </div>
+        <script>
+            "use strict";
+            
+            const inAlign = document.getElementsByName('align');
+            const inColor = document.getElementById('color');
+            const inSize = document.getElementById('size');
+            const inWidth = document.getElementById('width');
+
+            const btn_run = document.getElementById('run');
+            const btn_update = document.getElementById('update');
+            const horiz_line = document.getElementById('horiz_line');
+
+            btn_run.onclick = () => {
+
+                let Width = inWidth.value;
+                if (Width == '' || !/^[0-9]+$/.test(Width)) {
+                    return alert('Неправильно введенные данные');
+                } else if (Number(Width) > 640) {
+                    return alert('Максимальная длина линии = 640');
+                } else {
+                    Width = `${Width}px`
+                    horiz_line.style.width = Width;
+                }
+
+                let Size = inSize.value;
+                if (Size == '' || !/^[0-9]+$/.test(Size)) {
+                    return alert('Неправильно введенные данные');
+                } else {
+                    Size = `${Size}px`
+                    horiz_line.style.height = Size;
+                }
+
+                let Color = inColor.value;
+                horiz_line.style.backgroundColor = Color;
+
+                let align_val;
+                for (let i = 0; i < inAlign.length; i++) {
+                    if (inAlign[i].checked) {
+                        align_val = inAlign[i].value;
+                    }
+                }
+                if (align_val == 'left') {
+                    horiz_line.style.marginLeft = "0px";
+                } else if (align_val == 'right') {
+                    align_val = `${640 - Number(inWidth.value)}px`;
+                    horiz_line.style.marginLeft = align_val;
+                } else {
+                    align_val = `${640 / 2 - Number(inWidth.value) / 2}px`;
+                    horiz_line.style.marginLeft = align_val;
+                }
+            }
+
+            btn_update.onclick = () => {
+                horiz_line.style.width = '270px';
+                horiz_line.style.height = '25px';
+                horiz_line.style.backgroundColor = "red";
+                horiz_line.style.marginLeft = "0px";
+            }
+        </script>
+    </body>
+</html>

@@ -22,7 +22,7 @@
     </head>
     <body>
         <h2>База содержит результаты централизованного тестирования</h2>
-        <form>
+        <form action="#">
             <div id="main">
                 <table>
                     <tr>
@@ -86,7 +86,6 @@
             const inv_code = document.getElementById('inv_code'); 
 
             button.onclick = () => {
-                let result = true;
 
                 let Pass_series = (inPass_series.value).toString(),
                     Pass_num = inPass_num.value,
@@ -95,35 +94,30 @@
                     Code = inCode.value;
                         
                 if (Pass_series.length !== 2 || !/^[a-zA-Z]+$/.test(Pass_series)) {
-                    result = false;
                     inv_pass_series.style.display = "block";
                 } else {
                     inv_pass_series.style.display = "none";
                 }
 
                 if (Pass_num.length !== 7 || !/^[0-9]+$/.test(Pass_num)) {
-                    result = false;
                     inv_pass_num.style.display = "block";
                 } else {
                     inv_pass_num.style.display = "none";
                 }
 
                 if (Form_num.length !== 7 || !/^[0-9]+$/.test(Form_num)) {
-                    result = false;
                     inv_form_num.style.display = "block";
                 } else {
                     inv_form_num.style.display = "none";
                 }
 
                 if (Object == 'Выберите предмет') {
-                    result = false;
                     inv_object.style.display = "block";
                 } else {
                     inv_object.style.display = "none";
                 }
                         
                 if (Code !== "8064801") {
-                    result = false;
                     inv_code.style.display = "block";
                 } else {
                     inv_code.style.display = "none";
