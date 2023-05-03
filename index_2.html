@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Задание 2</title>
+        <style>
+            .valid {
+                float: right;
+                padding-right: 10px;
+                font-weight: bold;
+            }
+            .invalid {
+                color: red;
+                float: left;
+                padding-left: 10px;
+                font-weight: bold;
+            }
+            #inv_pass_series, #inv_pass_num, #inv_form_num, #inv_object, #inv_code {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <h2>База содержит результаты централизованного тестирования</h2>
+            <div id="main">
+                <table>
+                    <tr>
+                        <td class="valid">Серия паспорта</td>
+                        <td><input type="text" id="pass_series"></td>
+                        <td class="invalid" id="inv_pass_series">Введите серию паспорта (только две латинские буквы)</td>
+                    </tr>
+                    <tr>
+                        <td class="valid">Номер паспорта</td>
+                        <td><input type="text" id="pass_num"></td>
+                        <td class="invalid" id="inv_pass_num">Введите номер паспорта (только 7 цифр)</td>
+                    </tr>
+                    <tr>
+                        <td class="valid">Номер бланка</td>
+                        <td><input type="text" id="form_num"></td>
+                        <td class="invalid" id="inv_form_num">Введите номер бланка (только 7 цифр)</td>
+                    </tr>
+                    <tr>
+                        <td class="valid">Предмет</td>
+                        <td>
+                            <select id="object">
+                                <option>Выберите предмет</option>
+                                <option>Русский язык</option>
+                                <option>Математика</option>
+                                <option>Физика</option>
+                            </select>
+                        </td>
+                        <td class="invalid" id="inv_object">Выберите предмет</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><img src="captcha.jpg" width="169.6"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="valid">Код на картинке</td>
+                        <td><input type="text" id="code"></td>
+                        <td class="invalid" id="inv_code">Введите код</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="button" id="btn" value="Найти"></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <script>
+                    "use strict";
+
+                    const inPass_series = document.getElementById('pass_series'); 
+                    const inPass_num = document.getElementById('pass_num'); 
+                    const inForm_num = document.getElementById('form_num'); 
+                    const inObject = document.getElementById('object'); 
+                    const inCode = document.getElementById('code'); 
+                    const button = document.getElementById('btn');
+                    const inv_pass_series = document.getElementById('inv_pass_series'); 
+                    const inv_pass_num = document.getElementById('inv_pass_num'); 
+                    const inv_form_num = document.getElementById('inv_form_num'); 
+                    const inv_object = document.getElementById('inv_object'); 
+                    const inv_code = document.getElementById('inv_code'); 
+
+                    button.onclick = () => {
+                        let result = true;
+
+                        let Pass_series = (inPass_series.value).toString(),
+                            Pass_num = inPass_num.value,
+                            Form_num = inForm_num.value,
+                            Object = inObject.value,
+                            Code = inCode.value;
+                        
+                        if (Pass_series.length !== 2 || !/^[a-zA-Z]+$/.test(Pass_series)) {
+                            result = false;
+                            inv_pass_series.style.display = "block";
+                        } else {
+                            inv_pass_series.style.display = "none";
+                        }
+
+                        if (Pass_num.length !== 7 || !/^[0-9]+$/.test(Pass_num)) {
+                            result = false;
+                            inv_pass_num.style.display = "block";
+                        } else {
+                            inv_pass_num.style.display = "none";
+                        }
+
+                        if (Form_num.length !== 7 || !/^[0-9]+$/.test(Form_num)) {
+                            result = false;
+                            inv_form_num.style.display = "block";
+                        } else {
+                            inv_form_num.style.display = "none";
+                        }
+
+                        if (Object == 'Выберите предмет') {
+                            result = false;
+                            inv_object.style.display = "block";
+                        } else {
+                            inv_object.style.display = "none";
+                        }
+                        
+                        if (Code !== "8064801") {
+                            result = false;
+                            inv_code.style.display = "block";
+                        } else {
+                            inv_code.style.display = "none";
+                        }
+                    }
+                </script>
+            </div>
+        </form>
+    </body>
+</html>
