@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Задание 4</title>
+        <style>
+            #enter {
+                display: block;
+            }
+            td {
+                padding: 5px;
+            }
+            #modal {
+                display: none;
+                z-index: 1;
+                background-color: rgba(0, 0, 0, 0.8);
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+            }
+            #modal-content {
+                background-color: white;
+                margin: 15% auto;
+                padding: 15px;
+                border: 1px solid grey;
+                width: 40%;
+            }
+            .in {
+                width: 300px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <form>
+                <p id="enter"><input type="button" id="enter" value="Ввести свойства объекта"></p>
+                <div id="modal">
+                    <div id="modal-content">
+                        <h4 style="text-align: center; margin-top: 0px;">SSD диск</h4>
+                        <table>
+                            <tr>
+                                <td>Объём</td>
+                                <td>
+                                    <select id="volume">
+                                        <option>1 ТБ</option>
+                                        <option>512 ГБ</option>
+                                        <option>256 ГБ</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Интерфейс</td>
+                                <td><input class="in" type="text" id="intface"></td>
+                            </tr>
+                            <tr>
+                                <td>Тип микросхем Flash</td>
+                                <td><input class="in" type="text" id="chips"></td>
+                            </tr>
+                            <tr>
+                                <td>Контроллер</td>
+                                <td><input class="in" type="text" id="controller"></td>
+                            </tr>
+                        </table><br>
+                        <input type="button" id="btn" value="Ввести данные">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            "use strict";
+            class ssd_drive {
+                constructor(volume, intface, chips, controller) {
+                    this.volume = volume;
+                    this.intface = intface;
+                    this["type of Flash chips"] = chips;
+                    this.controller = controller;
+                }
+            }
+
+            let arrObjects = [];
+            let n = 3;
+
+            const inVolume = document.getElementsByName('volume');
+            const inIntface = document.getElementById('intface');
+            const inChips = document.getElementById('chips');
+            const inController = document.getElementById('controller');
+
+            const enter = document.getElementById('enter');
+            const btn = document.getElementById('btn');
+
+            enter.onclick = () => {
+                modal.style.display = "block";
+                enter.style.display = "none";
+            }
+
+            btn.onclick = () => {
+                arrObjects[0] = new ssd_drive((inVolume.value).toString(), inIntface.value, inChips.value, inController.value);
+                return alert(arrObjects[0]);
+            }
+            
+        </script>
+    </body>
+</html>
