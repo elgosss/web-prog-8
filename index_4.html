@@ -4,6 +4,17 @@
         <meta charset="UTF-8">
         <title>Задание 4</title>
         <style>
+            .m_btn {
+                background: #AFCDE7;
+                color: white;
+                font-size: 20px;
+                min-width: 300px;
+                border-radius: 5px;
+                padding: 8px 16px;
+                margin: 0 auto;
+                display: block;
+                cursor: pointer;
+            }
             #enter {
                 display: block;
             }
@@ -13,7 +24,7 @@
             #modal {
                 display: none;
                 z-index: 1;
-                background-color: rgba(0, 0, 0, 0.8);
+                background-color: rgba(0, 0, 0, 0.9);
                 position: fixed;
                 left: 0;
                 top: 0;
@@ -34,7 +45,7 @@
             .tabl {
                 border-collapse: collapse;
                 border: 3px solid black;
-                font-size: 14px;
+                font-size: 16px;
                 text-align: center;
                 table-layout: fixed;
                 width: 1000px;
@@ -47,16 +58,26 @@
                 background-color: #AFCDE7;
                 font-weight: bold;
             }
+            #close {
+                color: red;
+                font-size: 25px;
+                float: right;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
         <div id="main">
             <form>
-                <p><input type="button" id="enter" value="Ввести свойства объекта"></p>
-                <p><input type="button" id="tabl" value="Вывести таблицу"></p>
+                <p><input type="button" class="m_btn" id="enter" value="Ввести свойства объекта"></p>
+                <p><input type="button" class="m_btn" id="tabl" value="Вывести таблицу"></p>
                 <div id="modal">
                     <div id="modal-content">
-                        <h4 style="text-align: center; margin-top: 0px;">SSD диск</h4>
+                        <button id="close">&times</button>
+                        <h4 style="text-align: center; margin: 0px;">SSD диск</h4>
+                        <p style="text-align: right; margin: 0; font-size: 14px;"><em>После закрытия формы, данные обнулятся</em></p>
                         <table>
                             <tr>
                                 <td>Объём</td>
@@ -115,7 +136,6 @@
 
             enter.onclick = () => {
                 modal.style.display = "block";
-                enter.style.display = "none";
             }
             
             let i = 0;
@@ -127,7 +147,7 @@
                 inChips.value = '';
                 inController.value = '';
                 i++;
-                if (i == 3) {
+                if (i == n) {
                     enter.style.display = "none";
                     modal.style.display = "none";
                 }
