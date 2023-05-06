@@ -8,7 +8,7 @@
                 display: block;
             }
             td {
-                padding: 5px;
+                padding: 3px;
             }
             #modal {
                 display: none;
@@ -26,17 +26,34 @@
                 margin: 15% auto;
                 padding: 15px;
                 border: 1px solid grey;
-                width: 40%;
+                width: 30%;
             }
             .in {
-                width: 300px;
+                width: 100%;
+            }
+            .tabl {
+                border-collapse: collapse;
+                border: 3px solid black;
+                font-size: 14px;
+                text-align: center;
+                table-layout: fixed;
+                width: 1000px;
+            }
+            .tabl td {
+                border: 1px solid black;
+                padding: 5px;
+            }
+            .blue {
+                background-color: #AFCDE7;
+                font-weight: bold;
             }
         </style>
     </head>
     <body>
         <div id="main">
             <form>
-                <p id="enter"><input type="button" id="enter" value="Ввести свойства объекта"></p>
+                <p><input type="button" id="enter" value="Ввести свойства объекта"></p>
+                <p><input type="button" id="tabl" value="Вывести таблицу"></p>
                 <div id="modal">
                     <div id="modal-content">
                         <h4 style="text-align: center; margin-top: 0px;">SSD диск</h4>
@@ -45,9 +62,9 @@
                                 <td>Объём</td>
                                 <td>
                                     <select id="volume">
-                                        <option>1 ТБ</option>
-                                        <option>512 ГБ</option>
-                                        <option>256 ГБ</option>
+                                        <option value="1 ТБ">1 ТБ</option>
+                                        <option value="512 ТБ">512 ГБ</option>
+                                        <option value="256 ТБ">256 ГБ</option>
                                     </select>
                                 </td>
                             </tr>
@@ -78,29 +95,83 @@
                     this["type of Flash chips"] = chips;
                     this.controller = controller;
                 }
+                get Volume() { return this.volume; }
+                get Intface() { return this.intface; }
+                get Chips() { return this["type of Flash chips"]; }
+                get Controller() { return this.controller; }
             }
 
             let arrObjects = [];
             let n = 3;
 
-            const inVolume = document.getElementsByName('volume');
+            const inVolume = document.getElementById('volume');
             const inIntface = document.getElementById('intface');
             const inChips = document.getElementById('chips');
             const inController = document.getElementById('controller');
 
             const enter = document.getElementById('enter');
             const btn = document.getElementById('btn');
+            const tabl = document.getElementById('tabl');
 
             enter.onclick = () => {
                 modal.style.display = "block";
                 enter.style.display = "none";
             }
+            
+            let i = 0;
 
             btn.onclick = () => {
-                arrObjects[0] = new ssd_drive((inVolume.value).toString(), inIntface.value, inChips.value, inController.value);
-                return alert(arrObjects[0]);
+                arrObjects[i] = new ssd_drive(inVolume.value, inIntface.value, inChips.value, inController.value);
+                inVolume.value = '1 ТБ';
+                inIntface.value = '';
+                inChips.value = '';
+                inController.value = '';
+                i++;
+                if (i == 3) {
+                    enter.style.display = "none";
+                    modal.style.display = "none";
+                }
             }
             
+            let property = ['Объем', 'Интерфейс', 'Тип микросхем Flash', 'Контроллер'];
+            tabl.onclick = () => {
+                if (i == n) {
+                    enter.style.display = "none";
+                    tabl.style.display = "none";
+                    var newTable = document.createElement('table');
+                    newTable.className = 'tabl';
+                    for (var y = 0; y <= 4; y++) {
+                        var  newRow = newTable.insertRow(y);
+                        for (var x = 0; x <= 3; x++) {
+                            var newCell = newRow.insertCell(x);
+                            if (y == 0 && x > 0) {
+                                newCell.innerHTML = `SSD диск №${x}`;
+                                newCell.className = 'blue';
+                            }
+                            else if (x == 0 && y > 0) {
+                                newCell.innerHTML = property[y - 1];
+                                newCell.className = 'blue';
+                            }
+                            else if (y == 1) {                                        
+                                newCell.innerHTML = arrObjects[x - 1].Volume;
+                            }
+                            else if (y == 2) {
+                                newCell.innerHTML = arrObjects[x - 1].Intface;
+                            }
+                            else if (y == 3) {
+                                newCell.innerHTML = arrObjects[x - 1].Chips;
+                            }
+                            else if (y == 4) {
+                                newCell.innerHTML = arrObjects[x - 1].Controller;
+                            }
+                        }
+                    }
+                    document.body.appendChild(newTable);
+                }
+                else {
+                    alert('Заполните данные до конца!');
+                }
+            }
         </script>
     </body>
 </html>
